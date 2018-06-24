@@ -1,63 +1,71 @@
-const { resolve } = require('path'),
-      webpack = require('webpack'),
-      HtmlWebpackPlugin = require('html-webpack-plugin'),
-      ExtractTextPlugin = require("extract-text-webpack-plugin");
+const { resolve } = require("path");
+const webpack = require("webpack");
+const path = require('path');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  mode: "development",
 
   entry: {
     background_scripts: "./src/background_scripts/main.js",
-    popup: './src/popup/main.js',
-    options: './src/options/main.js'
+    popup: "./src/popup/main.js",
+    options: "./src/options/main.js"
   },
 
   output: {
-    path: resolve(__dirname, 'addon'),
-    filename: '[name].js',
-    publicPath: '/'
+    path: resolve(__dirname, "addon"),
+    filename: "[name].js",
+    publicPath: "/"
   },
 
   resolve: {
-    extensions: ['.js'],
+    symlinks: false,
+    cacheWithContext: false,
+    extensions: [".js"]
   },
 
   module: {
     rules: [
-      { test: /\.pug$/, loader: 'pug-loader'},
-      { test: /\.sass$/, use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader!sass-loader"
-        })
+      {
+        include: path.resolve(__dirname, 'src'),
+        test: /\.pug$/,
+        use: "pug-loader"
       },
-      { test: /\.(png|jpg|jpeg|gif|woff2)$/, loader: 'file-loader' },
-      { test: /\.js$/,
-        loader: 'babel-loader',
-        /*
-        query: {
-          presets: ['babili'],
-          comments: true
-        },
-        */
-        exclude: /(node_modules|bower_components)/ }
+      {
+        include: path.resolve(__dirname, 'src'),
+        test: /\.(sass|scss)$/,
+        use: ['cache-loader', MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      },
+      {
+        include: path.resolve(__dirname, 'src'),
+        test: /\.(png|jpg|jpeg|gif|woff2)$/,
+        use: ['cache-loader', "file-loader"]
+      },
+      {
+        include: path.resolve(__dirname, 'src'),
+        test: /\.js$/,
+        loader: "babel-loader"
+      }
     ]
   },
 
-  //devtool: 'cheap-source-map',
-
   plugins: [
     //new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin("[name].css"),
-    new HtmlWebpackPlugin({
-      filename: 'popup.html',
-      template: 'src/popup/index.pug',
-      chunksSortMode: 'dependency',
-      chunks: ['popup']
+    new MiniCssExtractPlugin({
+      filename: "[name].css"
     }),
     new HtmlWebpackPlugin({
-      filename: 'options.html',
-      template: 'src/options/index.pug',
-      chunksSortMode: 'dependency',
-      chunks: ['options']
+      filename: "popup.html",
+      template: "src/popup/index.pug",
+      chunksSortMode: "dependency",
+      chunks: ["popup"]
+    }),
+    new HtmlWebpackPlugin({
+      filename: "options.html",
+      template: "src/options/index.pug",
+      chunksSortMode: "dependency",
+      chunks: ["options"]
     })
   ]
 };
