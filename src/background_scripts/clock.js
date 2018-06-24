@@ -1,6 +1,6 @@
-var storage = require("./storage")
+import storage from "./storage";
 
-var clock = {
+export default {
     reset() {
         storage.store.passedMinutes = 0
     },
@@ -8,5 +8,3 @@ var clock = {
         storage.store.passedMinutes += number
     }
 }
-
-module.exports = clock

@@ -1,6 +1,6 @@
-const { toTitleCase, getLocalString } = require("../utility")
-const defaultValues = require('../configs/defaults')
-var nodes = require('./nodes')
+import { toTitleCase, getLocalString } from "../utility";
+import defaultValues from '../configs/defaults';
+import nodes from './nodes';
 
 // used to map a DOM's key to the locallized string
 // to render the options page
@@ -28,7 +28,7 @@ const storageKeys = [
     'soundVolume'
 ]
 
-var page = {
+export default {
     render() {
         page.labels.set()
         page.inputs.set()
@@ -170,5 +170,3 @@ var page = {
         }
     }
 }
-
-module.exports = page

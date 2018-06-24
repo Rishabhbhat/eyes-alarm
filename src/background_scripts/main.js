@@ -1,10 +1,10 @@
-const { handleResponse } = require('../utility')
-var ui = require("./ui")
-var idle = require("./idle")
-var clock = require("./clock")
-var counter = require("./counter")
-var storage = require("./storage")
-var timePacket = require("./timePacket")
+import { handleResponse } from '../utility';
+import ui from "./ui";
+import idle from "./idle";
+import clock from "./clock";
+import counter from "./counter";
+import storage from "./storage";
+import timePacket from "./timePacket";
 
 /**
  *  callbacks

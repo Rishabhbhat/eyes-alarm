@@ -1,7 +1,7 @@
-require("../styles/options_entry.sass")
-var options = require('./options')
-var page = require('./page')
-var nodes = require('./nodes')
+import "../styles/options_entry.sass";
+import options from './options';
+import page from './page';
+import nodes from './nodes';
 
 document.addEventListener("DOMContentLoaded", page.render)
 nodes.getDOM("apply").addEventListener("click", options.save)

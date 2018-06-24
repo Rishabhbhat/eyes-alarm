@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     isReading: true,
     passedMinutes: 0,
     breakTimeAmount: 10,

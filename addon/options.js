@@ -33,18 +33,35 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -62,414 +79,106 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/options/main.js");
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ "./src/configs/defaults.js":
+/*!*********************************!*\
+  !*** ./src/configs/defaults.js ***!
+  \*********************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const env = __webpack_require__(2);
-
-function handleResponse(r) {
-    console.info(r);
-}
-
-function log(...args) {
-    if (env.debugMode) {
-        console.log(args.reduce((acc, val) => acc + val, ''));
-    }
-}
-
-/**
- * baNANA => Banana
- * @param {String} word 
- */
-function toTitleCase(word) {
-    return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
-}
-
-/**
- * retrieve localized string
- * @param {String} key 
- */
-function getLocalString(key) {
-    return browser.i18n.getMessage(key);
-}
-
-/**
- * format time to [12:00] style
- * @param {Number} minutes 
- */
-function formatTime(minutes) {
-    if (!Number.isInteger(minutes)) {
-        console.error(`input time [${minutes}] is not integer`);
-        return 'ERROR';
-    }
-    let formatted = [];
-    let hour = 0;
-    if (minutes >= 60) {
-        do {
-            minutes -= 60;
-            hour += 1;
-        } while (minutes >= 60);
-    }
-    formatted.push(hour, minutes);
-    return formatted.map(el => padTime(el)).join(':');
-}
-
-/**
- * accept a number
- * if it's less than 10, pad it with zero
- * @param {Number} val 
- */
-function padTime(val) {
-    return val < 10 ? `0${val}` : val;
-}
-
-module.exports = {
-    handleResponse,
-    toTitleCase,
-    getLocalString,
-    log,
-    formatTime
-};
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\nvar _default = {\n  isReading: true,\n  passedMinutes: 0,\n  breakTimeAmount: 10,\n  readingTimeAmount: 50,\n  idleDetectionInterval: 1200,\n  title: browser.i18n.getMessage(\"notificationTitle\"),\n  message: browser.i18n.getMessage(\"notificationMessage\"),\n  soundEnabled: false,\n  soundPath: '',\n  soundVolume: 0.5\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/configs/defaults.js?");
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
 
-module.exports = {
-    isReading: true,
-    passedMinutes: 0,
-    breakTimeAmount: 10,
-    readingTimeAmount: 50,
-    idleDetectionInterval: 1200,
-    title: browser.i18n.getMessage("notificationTitle"),
-    message: browser.i18n.getMessage("notificationMessage"),
-    soundEnabled: false,
-    soundPath: '',
-    soundVolume: 0.5
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = {
-    debugMode: true
-};
-
-/***/ }),
-/* 3 */,
-/* 4 */
-/***/ (function(module, exports) {
-
-var nodes = {
-    pool: {},
-    /**
-     * return specified dom
-     * if it doesnt exist in pool, get it and cache it in pool
-     * @param {*} key 
-     */
-    getDOM(key) {
-        if (nodes.pool.hasOwnProperty(key)) {
-            return nodes.pool[key];
-        } else {
-            return nodes.pool[key] = document.querySelector('#' + key);
-        }
-    }
-};
-
-module.exports = nodes;
-
-/***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/***/ "./src/configs/env.js":
+/*!****************************!*\
+  !*** ./src/configs/env.js ***!
+  \****************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { toTitleCase, getLocalString } = __webpack_require__(0);
-const defaultValues = __webpack_require__(1);
-var nodes = __webpack_require__(4);
-
-// used to map a DOM's key to the locallized string
-// to render the options page
-const reflect = {
-    // [dom key]: [locale string key]
-    readingTime_label: 'optionsWorkTimeLabel',
-    breakTime_label: 'optionsBreakTimeLabel',
-    title_label: 'optionsNotificationTitleLabel',
-    message_label: 'optionsNotificationMessageLabel',
-    soundEnabled_label: 'optionsSoundEnabledLabel',
-    soundVolume_label: 'optionsSoundVolumeLabel',
-    soundPath_label: 'optionsSoundPathLabel',
-    apply: 'optionsApplyButton',
-    reset: 'optionsResetButton'
-};
-
-// used to retrieve data from specified nodes
-const storageKeys = ['breakTimeAmount', 'readingTimeAmount', 'title', 'message', 'soundEnabled', 'soundPath', 'soundVolume'];
-
-var page = {
-    render() {
-        page.labels.set();
-        page.inputs.set();
-    },
-    labels: {
-        sound: {
-            volume: {
-                /**
-                 * render volume's label
-                 * @param {Event} e 
-                 */
-                set(e = null) {
-                    let value = e === null ? nodes.getDOM('soundVolume').value : e.target.value;
-
-                    nodes.getDOM('soundVolumeValue').innerText = `${value * 100}%`;
-                }
-            }
-        },
-        /**
-         * render all labels
-         */
-        set() {
-            for (var key in reflect) {
-                nodes.getDOM(key).innerText = getLocalString(reflect[key]);
-            }
-        }
-    },
-    inputs: {
-        sound: {
-            /**
-             * switch status whether sound-related columns is disabled
-             * @param {Event} e 
-             */
-            toggleEditable(e = null) {
-                let disabled = false;
-                let switchList = ['soundPath', 'soundVolume'];
-
-                if (e === null) {
-                    disabled = !nodes.getDOM('soundEnabled').checked;
-                } else {
-                    disabled = !e.target.checked;
-                }
-
-                switchList.forEach(key => {
-                    nodes.getDOM(key).disabled = disabled;
-                });
-            }
-        },
-        /**
-         * Retrieve all data from local storage,
-         * and render them into columns with special process depending on its type.
-         * When there's no such value by specified key in storage,
-         * use default values instead.
-         */
-        set() {
-            browser.storage.local.get(storageKeys).then(result => {
-                storageKeys.forEach(key => {
-                    let node = nodes.getDOM(key);
-                    let value = result[key] || defaultValues[key];
-                    switch (node.type) {
-                        case 'checkbox':
-                            nodes.getDOM(key).checked = value;
-                            break;
-                        default:
-                            nodes.getDOM(key).value = value;
-                            break;
-                    }
-                });
-
-                // display current sound volume
-                page.labels.sound.volume.set();
-
-                // toggle columns related to custom-sound editable or not
-                page.inputs.sound.toggleEditable();
-            }).catch(err => {
-                console.error(err);
-            });
-        },
-        /**
-         * get all data specified by storageKeys,
-         * append a timestamp(last_modified) for always updating value against browser's mechanism
-         */
-        get() {
-            let set = {
-                last_modified: new Date().toLocaleTimeString()
-            };
-            storageKeys.forEach(key => {
-                let node = nodes.getDOM(key);
-                let attrs = node.attributes;
-
-                if (attrs.type) {
-                    switch (attrs.type.value) {
-                        case 'number':
-                        case 'range':
-                            set[key] = node.valueAsNumber;
-                            break;
-                        case 'checkbox':
-                            set[key] = node.checked;
-                            break;
-                        default:
-                            set[key] = node.value;
-                            break;
-                    }
-                } else {
-                    set[key] = node.value;
-                }
-            });
-            return set;
-        },
-        /**
-         * return a list filled with nodes specified by storageKeys
-         */
-        dom() {
-            return Array.from(storageKeys.map(key => nodes.getDOM(key)));
-        }
-    },
-    button: {
-        loading: {
-            /**
-             * toggle loading animation for Apply button
-             * @param {Boolean} isLoading 
-             */
-            toggle(isLoading = false) {
-                nodes.getDOM('apply').classList.toggle('is-loading', isLoading);
-            },
-            /**
-             * generate callback to turn on/off loading animation
-             * @param {Boolean} isLoading 
-             */
-            toggleFactory(isLoading) {
-                return () => {
-                    nodes.getDOM('apply').classList.toggle('is-loading', isLoading);
-                };
-            }
-        }
-    }
-};
-
-module.exports = page;
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\nvar _default = {\n  debugMode: true\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/configs/env.js?");
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */
+
+/***/ "./src/options/main.js":
+/*!*****************************!*\
+  !*** ./src/options/main.js ***!
+  \*****************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { getLocalString } = __webpack_require__(0);
-var page = __webpack_require__(9);
-var nodes = __webpack_require__(4);
-var defaultValues = __webpack_require__(1);
-
-var options = {
-    /**
-     * gather data from all specified columns
-     * (specify by storageKeys of page.js)
-     * then save them
-     * @param {Event} e 
-     */
-    save(e) {
-        page.button.loading.toggle(true); // animation
-        e.preventDefault();
-
-        let data = page.inputs.get();
-        let dom = page.inputs.dom();
-        let timestamp = `[${data.last_modified}] `;
-        let stopLoadingAnimation = page.button.loading.toggleFactory(false);
-
-        if (options.checkInputErrorExists(dom)) {
-            options.msg('', false);
-            return;
-        }
-
-        options.apply(timestamp, data, stopLoadingAnimation, stopLoadingAnimation);
-    },
-    /**
-     * 重設所有欄位
-     * @param {Event} e 
-     */
-    reset(e) {
-        e.preventDefault();
-
-        let data = ({ title, message, breakTimeAmount, readingTimeAmount } = defaultValues);
-        let timestamp = data.last_modified = new Date().toLocaleTimeString();
-
-        options.apply(timestamp, data, function updateOptionsInputs() {
-            page.inputs.set();
-        });
-    },
-    /**
-     * 根據input type 檢查資料是否合乎要求
-     * @param {*} dom 
-     */
-    checkInputErrorExists(dom) {
-        return dom.map(el => {
-
-            if (el.attributes.type && el.attributes.type.value === "number") {
-                return el.validity.rangeOverflow || el.validity.rangeUnderflow;
-                // returning True means that something is wrong
-            } else {
-                    return false;
-                    // so return False when checking a non-number input
-                }
-        }).filter(el => el).length;
-    },
-    /**
-     * save data into local storage
-     * @param {String} timestamp 
-     * @param {Object} data 
-     * @param {Function} successCallback 
-     * @param {Function} failCallback
-     */
-    apply(timestamp, data, successCallback = undefined, failCallback = undefined) {
-
-        browser.storage.local.set(data).then(() => {
-            options.msg(timestamp + getLocalString('optionsApplySuccessMessage'), true);
-            successCallback && successCallback();
-        }).catch(err => {
-            options.msg(timestamp + err.message, false);
-            failCallback && failCallback();
-        });
-    },
-    msg(text, isSuccess) {
-        let n = nodes.getDOM('msg');
-        n.innerText = text;
-        n.classList.toggle('success', isSuccess);
-        n.classList.toggle('warning', !isSuccess);
-    }
-};
-
-module.exports = options;
+"use strict";
+eval("\n\n__webpack_require__(/*! ../styles/options_entry.sass */ \"./src/styles/options_entry.sass\");\n\nvar _options = _interopRequireDefault(__webpack_require__(/*! ./options */ \"./src/options/options.js\"));\n\nvar _page = _interopRequireDefault(__webpack_require__(/*! ./page */ \"./src/options/page.js\"));\n\nvar _nodes = _interopRequireDefault(__webpack_require__(/*! ./nodes */ \"./src/options/nodes.js\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\ndocument.addEventListener(\"DOMContentLoaded\", _page.default.render);\n\n_nodes.default.getDOM(\"apply\").addEventListener(\"click\", _options.default.save);\n\n_nodes.default.getDOM(\"reset\").addEventListener(\"click\", _options.default.reset);\n\n_nodes.default.getDOM(\"soundEnabled\").addEventListener(\"click\", _page.default.inputs.sound.toggleEditable);\n\n_nodes.default.getDOM(\"soundVolume\").addEventListener(\"change\", _page.default.labels.sound.volume.set);\n\n//# sourceURL=webpack:///./src/options/main.js?");
 
 /***/ }),
-/* 13 */,
-/* 14 */
-/***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
+/***/ "./src/options/nodes.js":
+/*!******************************!*\
+  !*** ./src/options/nodes.js ***!
+  \******************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
-var options = __webpack_require__(12);
-var page = __webpack_require__(9);
-var nodes = __webpack_require__(4);
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\nvar _default = {\n  pool: {},\n\n  /**\n   * return specified dom\n   * if it doesnt exist in pool, get it and cache it in pool\n   * @param {*} key \n   */\n  getDOM: function getDOM(key) {\n    if (nodes.pool.hasOwnProperty(key)) {\n      return nodes.pool[key];\n    } else {\n      return nodes.pool[key] = document.querySelector('#' + key);\n    }\n  }\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/options/nodes.js?");
 
-document.addEventListener("DOMContentLoaded", page.render);
-nodes.getDOM("apply").addEventListener("click", options.save);
-nodes.getDOM("reset").addEventListener("click", options.reset);
-nodes.getDOM("soundEnabled").addEventListener("click", page.inputs.sound.toggleEditable);
-nodes.getDOM("soundVolume").addEventListener("change", page.labels.sound.volume.set);
+/***/ }),
+
+/***/ "./src/options/options.js":
+/*!********************************!*\
+  !*** ./src/options/options.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _utility = __webpack_require__(/*! ../utility */ \"./src/utility.js\");\n\nvar _page = _interopRequireDefault(__webpack_require__(/*! ./page */ \"./src/options/page.js\"));\n\nvar _nodes = _interopRequireDefault(__webpack_require__(/*! ./nodes */ \"./src/options/nodes.js\"));\n\nvar _defaults = _interopRequireDefault(__webpack_require__(/*! ../configs/defaults */ \"./src/configs/defaults.js\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar _default = {\n  /**\n   * gather data from all specified columns\n   * (specify by storageKeys of page.js)\n   * then save them\n   * @param {Event} e \n   */\n  save: function save(e) {\n    _page.default.button.loading.toggle(true); // animation\n\n\n    e.preventDefault();\n\n    var data = _page.default.inputs.get();\n\n    var dom = _page.default.inputs.dom();\n\n    var timestamp = \"[\".concat(data.last_modified, \"] \");\n\n    var stopLoadingAnimation = _page.default.button.loading.toggleFactory(false);\n\n    if (options.checkInputErrorExists(dom)) {\n      options.msg('', false);\n      return;\n    }\n\n    options.apply(timestamp, data, stopLoadingAnimation, stopLoadingAnimation);\n  },\n\n  /**\n   * 重設所有欄位\n   * @param {Event} e \n   */\n  reset: function reset(e) {\n    var _defaultValues;\n\n    e.preventDefault();\n    var data = (_defaultValues = _defaults.default, title = _defaultValues.title, message = _defaultValues.message, breakTimeAmount = _defaultValues.breakTimeAmount, readingTimeAmount = _defaultValues.readingTimeAmount, _defaultValues);\n    var timestamp = data.last_modified = new Date().toLocaleTimeString();\n    options.apply(timestamp, data, function updateOptionsInputs() {\n      _page.default.inputs.set();\n    });\n  },\n\n  /**\n   * 根據input type 檢查資料是否合乎要求\n   * @param {*} dom \n   */\n  checkInputErrorExists: function checkInputErrorExists(dom) {\n    return dom.map(function (el) {\n      if (el.attributes.type && el.attributes.type.value === \"number\") {\n        return el.validity.rangeOverflow || el.validity.rangeUnderflow; // returning True means that something is wrong\n      } else {\n          return false; // so return False when checking a non-number input\n        }\n    }).filter(function (el) {\n      return el;\n    }).length;\n  },\n\n  /**\n   * save data into local storage\n   * @param {String} timestamp \n   * @param {Object} data \n   * @param {Function} successCallback \n   * @param {Function} failCallback\n   */\n  apply: function apply(timestamp, data) {\n    var successCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;\n    var failCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;\n    browser.storage.local.set(data).then(function () {\n      options.msg(timestamp + (0, _utility.getLocalString)('optionsApplySuccessMessage'), true);\n      successCallback && successCallback();\n    }).catch(function (err) {\n      options.msg(timestamp + err.message, false);\n      failCallback && failCallback();\n    });\n  },\n  msg: function msg(text, isSuccess) {\n    var n = _nodes.default.getDOM('msg');\n\n    n.innerText = text;\n    n.classList.toggle('success', isSuccess);\n    n.classList.toggle('warning', !isSuccess);\n  }\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/options/options.js?");
+
+/***/ }),
+
+/***/ "./src/options/page.js":
+/*!*****************************!*\
+  !*** ./src/options/page.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _utility = __webpack_require__(/*! ../utility */ \"./src/utility.js\");\n\nvar _defaults = _interopRequireDefault(__webpack_require__(/*! ../configs/defaults */ \"./src/configs/defaults.js\"));\n\nvar _nodes = _interopRequireDefault(__webpack_require__(/*! ./nodes */ \"./src/options/nodes.js\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// used to map a DOM's key to the locallized string\n// to render the options page\nvar reflect = {\n  // [dom key]: [locale string key]\n  readingTime_label: 'optionsWorkTimeLabel',\n  breakTime_label: 'optionsBreakTimeLabel',\n  title_label: 'optionsNotificationTitleLabel',\n  message_label: 'optionsNotificationMessageLabel',\n  soundEnabled_label: 'optionsSoundEnabledLabel',\n  soundVolume_label: 'optionsSoundVolumeLabel',\n  soundPath_label: 'optionsSoundPathLabel',\n  apply: 'optionsApplyButton',\n  reset: 'optionsResetButton' // used to retrieve data from specified nodes\n\n};\nvar storageKeys = ['breakTimeAmount', 'readingTimeAmount', 'title', 'message', 'soundEnabled', 'soundPath', 'soundVolume'];\nvar _default = {\n  render: function render() {\n    page.labels.set();\n    page.inputs.set();\n  },\n  labels: {\n    sound: {\n      volume: {\n        /**\n         * render volume's label\n         * @param {Event} e \n         */\n        set: function set() {\n          var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n          var value = e === null ? _nodes.default.getDOM('soundVolume').value : e.target.value;\n          _nodes.default.getDOM('soundVolumeValue').innerText = \"\".concat(value * 100, \"%\");\n        }\n      }\n    },\n\n    /**\n     * render all labels\n     */\n    set: function set() {\n      for (var key in reflect) {\n        _nodes.default.getDOM(key).innerText = (0, _utility.getLocalString)(reflect[key]);\n      }\n    }\n  },\n  inputs: {\n    sound: {\n      /**\n       * switch status whether sound-related columns is disabled\n       * @param {Event} e \n       */\n      toggleEditable: function toggleEditable() {\n        var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n        var disabled = false;\n        var switchList = ['soundPath', 'soundVolume'];\n\n        if (e === null) {\n          disabled = !_nodes.default.getDOM('soundEnabled').checked;\n        } else {\n          disabled = !e.target.checked;\n        }\n\n        switchList.forEach(function (key) {\n          _nodes.default.getDOM(key).disabled = disabled;\n        });\n      }\n    },\n\n    /**\n     * Retrieve all data from local storage,\n     * and render them into columns with special process depending on its type.\n     * When there's no such value by specified key in storage,\n     * use default values instead.\n     */\n    set: function set() {\n      browser.storage.local.get(storageKeys).then(function (result) {\n        storageKeys.forEach(function (key) {\n          var node = _nodes.default.getDOM(key);\n\n          var value = result[key] || _defaults.default[key];\n\n          switch (node.type) {\n            case 'checkbox':\n              _nodes.default.getDOM(key).checked = value;\n              break;\n\n            default:\n              _nodes.default.getDOM(key).value = value;\n              break;\n          }\n        }); // display current sound volume\n\n        page.labels.sound.volume.set(); // toggle columns related to custom-sound editable or not\n\n        page.inputs.sound.toggleEditable();\n      }).catch(function (err) {\n        console.error(err);\n      });\n    },\n\n    /**\n     * get all data specified by storageKeys,\n     * append a timestamp(last_modified) for always updating value against browser's mechanism\n     */\n    get: function get() {\n      var set = {\n        last_modified: new Date().toLocaleTimeString()\n      };\n      storageKeys.forEach(function (key) {\n        var node = _nodes.default.getDOM(key);\n\n        var attrs = node.attributes;\n\n        if (attrs.type) {\n          switch (attrs.type.value) {\n            case 'number':\n            case 'range':\n              set[key] = node.valueAsNumber;\n              break;\n\n            case 'checkbox':\n              set[key] = node.checked;\n              break;\n\n            default:\n              set[key] = node.value;\n              break;\n          }\n        } else {\n          set[key] = node.value;\n        }\n      });\n      return set;\n    },\n\n    /**\n     * return a list filled with nodes specified by storageKeys\n     */\n    dom: function dom() {\n      return Array.from(storageKeys.map(function (key) {\n        return _nodes.default.getDOM(key);\n      }));\n    }\n  },\n  button: {\n    loading: {\n      /**\n       * toggle loading animation for Apply button\n       * @param {Boolean} isLoading \n       */\n      toggle: function toggle() {\n        var isLoading = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;\n\n        _nodes.default.getDOM('apply').classList.toggle('is-loading', isLoading);\n      },\n\n      /**\n       * generate callback to turn on/off loading animation\n       * @param {Boolean} isLoading \n       */\n      toggleFactory: function toggleFactory(isLoading) {\n        return function () {\n          _nodes.default.getDOM('apply').classList.toggle('is-loading', isLoading);\n        };\n      }\n    }\n  }\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/options/page.js?");
+
+/***/ }),
+
+/***/ "./src/styles/options_entry.sass":
+/*!***************************************!*\
+  !*** ./src/styles/options_entry.sass ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/styles/options_entry.sass?");
+
+/***/ }),
+
+/***/ "./src/utility.js":
+/*!************************!*\
+  !*** ./src/utility.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar env = __webpack_require__(/*! ./configs/env */ \"./src/configs/env.js\");\n\nfunction handleResponse(r) {\n  console.info(r);\n}\n\nfunction log() {\n  if (env.debugMode) {\n    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n      args[_key] = arguments[_key];\n    }\n\n    console.log(args.reduce(function (acc, val) {\n      return acc + val;\n    }, ''));\n  }\n}\n/**\n * baNANA => Banana\n * @param {String} word \n */\n\n\nfunction toTitleCase(word) {\n  return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();\n}\n/**\n * retrieve localized string\n * @param {String} key \n */\n\n\nfunction getLocalString(key) {\n  return browser.i18n.getMessage(key);\n}\n/**\n * format time to [12:00] style\n * @param {Number} minutes \n */\n\n\nfunction formatTime(minutes) {\n  if (!Number.isInteger(minutes)) {\n    console.error(\"input time [\".concat(minutes, \"] is not integer\"));\n    return 'ERROR';\n  }\n\n  var formatted = [];\n  var hour = 0;\n\n  if (minutes >= 60) {\n    do {\n      minutes -= 60;\n      hour += 1;\n    } while (minutes >= 60);\n  }\n\n  formatted.push(hour, minutes);\n  return formatted.map(function (el) {\n    return padTime(el);\n  }).join(':');\n}\n/**\n * accept a number\n * if it's less than 10, pad it with zero\n * @param {Number} val \n */\n\n\nfunction padTime(val) {\n  return val < 10 ? \"0\".concat(val) : val;\n}\n\nmodule.exports = {\n  handleResponse: handleResponse,\n  toTitleCase: toTitleCase,\n  getLocalString: getLocalString,\n  log: log,\n  formatTime: formatTime\n};\n\n//# sourceURL=webpack:///./src/utility.js?");
 
 /***/ })
-/******/ ]);
+
+/******/ });

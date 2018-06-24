@@ -1,4 +1,4 @@
-var counter = {
+export default {
     start() {
         browser.alarms.create('eyes-alarm-counter', {
             periodInMinutes: 1
@@ -12,5 +12,3 @@ var counter = {
         counter.start()
     }
 }
-
-module.exports = counter

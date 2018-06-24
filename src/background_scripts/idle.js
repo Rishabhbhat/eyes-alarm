@@ -1,11 +1,11 @@
-var ui = require("./ui")
-var clock = require("./clock")
-var counter = require("./counter")
-var audioElement = require("./audioElement")
+import ui from "./ui";
+import clock from "./clock";
+import counter from "./counter";
+import audioElement from "./audioElement";
 
-var isLocked = false
+let isLocked = false
 
-var idle = {
+export default {
     init(val) {
         browser.idle.setDetectionInterval(val);
     },
@@ -37,5 +37,3 @@ var idle = {
         }
     }
 }
-
-module.exports = idle

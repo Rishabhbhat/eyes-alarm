@@ -1,4 +1,4 @@
-var nodes = {
+export default {
     pool: {},
     /**
      * return specified dom
@@ -13,5 +13,3 @@ var nodes = {
         }
     }
 }
-
-module.exports = nodes

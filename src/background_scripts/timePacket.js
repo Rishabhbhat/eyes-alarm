@@ -1,11 +1,9 @@
-var storage = require("./storage")
+import storage from "./storage";
 
-var timePacket = () => {
+export default () => {
     return {
         time: storage.store.passedMinutes,
         limit: storage.store.isReading ? storage.store.readingTimeAmount : storage.store.breakTimeAmount,
         reading: storage.store.isReading
     }
 }
-
-module.exports = timePacket

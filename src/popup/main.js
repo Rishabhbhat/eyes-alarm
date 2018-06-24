@@ -1,5 +1,5 @@
-require("../styles/popup_entry.sass")
-var clock = require("./clock")
+import "../styles/popup_entry.sass";
+import clock from "./clock";
 
 
 document.querySelector('#refresh_button').addEventListener('click', clock.reset)

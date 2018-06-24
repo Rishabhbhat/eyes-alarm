@@ -1,4 +1,4 @@
-const defaultValues = require('../configs/defaults')
+import defaultValues from '../configs/defaults';
 const storageKeys = [
     'isReading',
     'passedMinutes',
@@ -9,7 +9,7 @@ const storageKeys = [
     'soundPath'
 ]
 
-var storage = {
+export default {
     store: {},
 
     load({callback, params}) {
@@ -27,5 +27,3 @@ var storage = {
             })
     }
 }
-
-module.exports = storage

@@ -1,9 +1,9 @@
-const { getLocalString } = require("../utility")
-var page = require('./page')
-var nodes = require('./nodes')
-var defaultValues = require('../configs/defaults')
+import { getLocalString } from "../utility";
+import page from './page';
+import nodes from './nodes';
+import defaultValues from '../configs/defaults';
 
-var options = {
+export default {
     /**
      * gather data from all specified columns
      * (specify by storageKeys of page.js)
@@ -85,5 +85,3 @@ var options = {
         n.classList.toggle('warning', !isSuccess)
     }
 }
-
-module.exports = options

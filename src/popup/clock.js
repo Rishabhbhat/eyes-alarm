@@ -1,6 +1,6 @@
-const { formatTime } = require("../utility")
+import { formatTime } from "../utility";
 
-var clock = {
+export default {
     dom: null,
     request() {
         browser.runtime.sendMessage({ type: 'requestTime' })
@@ -25,5 +25,3 @@ var clock = {
         return true;
     }
 }
-
-module.exports = clock

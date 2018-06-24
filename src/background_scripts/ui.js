@@ -1,8 +1,8 @@
-var storage = require("./storage")
-var timePacket = require("./timePacket")
-var {audioElement, defaultSoundPath} = require("./audioElement")
-var paths = require("../configs/paths")
-var defaultValues = require("../configs/defaults")
+import storage from "./storage";
+import timePacket from "./timePacket";
+import {audioElement, defaultSoundPath} from "./audioElement";
+import paths from "../configs/paths";
+import defaultValues from "../configs/defaults";
 
 let notificationParams = {
     type: 'basic',
@@ -10,9 +10,10 @@ let notificationParams = {
     title: defaultValues.title,
     message: defaultValues.message
 }
+
 let notificationID = 'eyes-alarm-n'
 
-var ui = {
+export default {
     icon: {
         /**
          * once used to change the color of clock inside popup
@@ -116,5 +117,3 @@ var ui = {
         }
     }
 }
-
-module.exports = ui
