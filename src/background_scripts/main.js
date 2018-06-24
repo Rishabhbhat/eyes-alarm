@@ -1,84 +1,95 @@
 import { handleResponse } from '../utility';
-import ui from "./ui";
-import idle from "./idle";
-import clock from "./clock";
-import counter from "./counter";
-import storage from "./storage";
-import timePacket from "./timePacket";
+import Ticker from "./Ticker";
+import Storage from "./Storage";
+import TimePacket from "./TimePacket";
+import IdleDetector from "./IdleDetector";
+import Clock from "./ui/Clock";
+import Notification from "./ui/Notification";
 
 /**
- *  callbacks
+ *  commands
  */
-function resetUI(iconIsGreen) {
-    clock.reset()
-    //ui.icon.switch(iconIsGreen)
-    ui.clock.switch(iconIsGreen)
-    ui.clock.sync()
+function resetUI(icontype) {
+    Clock.reset();
+    Clock.switch(icontype === 'green' ? true : false);
+    Clock.sync();
+    //Icon.switch(icontype)
 }
 
 function shouldRead() {
-    return !storage.store.isReading
-        && storage.store.passedMinutes >= storage.store.breakTimeAmount
+    return !Storage.store.isReading
+        && Storage.store.passedMinutes >= Storage.store.breakTimeAmount
 }
 
 function shouldBreak() {
-    return storage.store.isReading
-        && storage.store.passedMinutes >= storage.store.readingTimeAmount
+    return Storage.store.isReading
+        && Storage.store.passedMinutes >= Storage.store.readingTimeAmount
 }
 
 function updateClock() {
-    clock.plus(1)
-    ui.clock.sync()
+    Clock.plus(1);
+    Clock.sync();
 }
 
-// dispatch alarm event
+/**
+ * preparing listeners
+ */
+// User interface should respond to status' change
 browser.alarms.onAlarm.addListener(alarm => {
-    updateClock()
+    updateClock();
+
     if (shouldBreak()) {
-        counter.restart()
-        resetUI(false) // turn to red
-        ui.notice.create()
+        Ticker.restart();
+        resetUI('red');
+        Notification.create();
     } else if (shouldRead()) {
-        counter.restart()
-        resetUI(true) // turn to green
+        Ticker.restart();
+        resetUI('green');
     }
 })
 
-// start dispatch request
+// receive any communication-request from popup(clock)
 browser.runtime.onMessage.addListener((request, sender) => {
     switch (request.type) {
-
         case 'requestTime':
-            return Promise.resolve(timePacket())
+            return TimePacket();
 
         case 'resetCounter':
-            counter.restart()
-            resetUI(true)
-            return Promise.resolve(timePacket())
+            Ticker.restart();
+            resetUI('green');
+            return TimePacket();
     }
 })
 
-// reset alarms when setting changes
-
-browser.storage.onChanged.addListener((changes, area) => {
+// reset popup(clock) and ticker, when setting changes
+browser.Storage.onChanged.addListener(async (changes, area) => {
     if (area === 'local') {
-        storage.load({
-            callback: () => {
-                counter.restart()
-                resetUI(true)
-            }
-        })
+        try {
+            await Storage.load();
+
+            Ticker.restart();
+            resetUI('green');
+        } catch (error) {
+            console.error(error)
+        }
     }
 })
 
 
 /**
- *  business logic
+ *  Activate clock
  */
-storage.load({
-    callback: () => {
-        idle.init(storage.store.idleDetectionInterval)
-        idle.detect.start()
-        counter.start()
+(async () => {
+    try {
+        await Storage.load();
+    
+        IdleDetector.init(Storage.store.idleDetectionInterval);
+        IdleDetector.start();
+    
+        // The clock start working after this line
+        Ticker.start();
+    } catch (error) {
+        console.error(error);
     }
 })
+

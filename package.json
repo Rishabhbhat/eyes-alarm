@@ -34,5 +34,7 @@
     "zipf": "bestzip zip/firefox.zip addon/*",
     "zipc": "bestzip zip/chrome.zip addon/*"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.51"
+  }
 }
