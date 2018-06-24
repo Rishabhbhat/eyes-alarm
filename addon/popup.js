@@ -127,7 +127,7 @@ eval("\n\n__webpack_require__(/*! ../styles/popup_entry.sass */ \"./src/styles/p
   !*** ./src/styles/popup_entry.sass ***!
   \*************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/styles/popup_entry.sass?");
 

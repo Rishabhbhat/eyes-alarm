@@ -86,14 +86,14 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/file-loader/dist/cjs.js!./src/178646__zabuhailo__bronzebell1.wav":
-/*!***************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js!./src/178646__zabuhailo__bronzebell1.wav ***!
-  \***************************************************************************************/
+/***/ "./src/178646__zabuhailo__bronzebell1.wav":
+/*!************************************************!*\
+  !*** ./src/178646__zabuhailo__bronzebell1.wav ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__.p + \"a5d97ad536ac3f7b1accf037828bafed.wav\";\n\n//# sourceURL=webpack:///./src/178646__zabuhailo__bronzebell1.wav?./node_modules/file-loader/dist/cjs.js");
+eval("module.exports = __webpack_require__.p + \"a5d97ad536ac3f7b1accf037828bafed.wav\";\n\n//# sourceURL=webpack:///./src/178646__zabuhailo__bronzebell1.wav?");
 
 /***/ }),
 
@@ -105,7 +105,7 @@ eval("module.exports = __webpack_require__.p + \"a5d97ad536ac3f7b1accf037828bafe
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _zabuhailo__bronzebell = _interopRequireDefault(__webpack_require__(/*! file-loader!../178646__zabuhailo__bronzebell1.wav */ \"./node_modules/file-loader/dist/cjs.js!./src/178646__zabuhailo__bronzebell1.wav\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar audioElement = new Audio(_zabuhailo__bronzebell.default);\naudioElement.preload = true;\naudioElement.loop = false;\nvar _default = {\n  audioElement: audioElement,\n  defaultSoundPath: _zabuhailo__bronzebell.default\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/background_scripts/audioElement.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _zabuhailo__bronzebell = _interopRequireDefault(__webpack_require__(/*! ../178646__zabuhailo__bronzebell1.wav */ \"./src/178646__zabuhailo__bronzebell1.wav\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar audioElement = new Audio(_zabuhailo__bronzebell.default);\naudioElement.preload = true;\naudioElement.loop = false;\nvar _default = {\n  audioElement: audioElement,\n  defaultSoundPath: _zabuhailo__bronzebell.default\n};\nexports.default = _default;\n\n//# sourceURL=webpack:///./src/background_scripts/audioElement.js?");
 
 /***/ }),
 

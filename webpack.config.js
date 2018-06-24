@@ -30,7 +30,12 @@ module.exports = {
       {
         include: path.resolve(__dirname, 'src'),
         test: /\.pug$/,
-        use: "pug-loader"
+        use: {
+          loader: 'pug-loader',
+          options: {
+            pretty: true
+          }
+        }
       },
       {
         include: path.resolve(__dirname, 'src'),
@@ -39,7 +44,7 @@ module.exports = {
       },
       {
         include: path.resolve(__dirname, 'src'),
-        test: /\.(png|jpg|jpeg|gif|woff2)$/,
+        test: /\.(png|jpg|jpeg|gif|woff2|wav)$/,
         use: ['cache-loader', "file-loader"]
       },
       {
